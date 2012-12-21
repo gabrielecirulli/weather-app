@@ -20,7 +20,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 public class Utility {
 
-    static ImageIcon prepareScaledIcon( String name, int width, int height ) {
+    public static ImageIcon prepareScaledIcon( String name, int width, int height ) {
 	ImageIcon originalIcon = new ImageIcon( ClassLoader.getSystemResource(
 		name ) );
 
@@ -29,18 +29,18 @@ public class Utility {
 
     }
 
-    static ImageIcon prepareScaledIcon( String name, Dimension dimension ) {
+    public static ImageIcon prepareScaledIcon( String name, Dimension dimension ) {
 	return prepareScaledIcon( name, dimension.width, dimension.height );
     }
 
-    static void addComponents( Container destination,
+    public static void addComponents( Container destination,
 	    Component[] components ) {
 	for ( Component component : components ) {
 	    destination.add( component );
 	}
     }
 
-    static void performSetup() throws ClassNotFoundException,
+    public static void performSetup() throws ClassNotFoundException,
 	    InstantiationException, IllegalAccessException,
 	    UnsupportedLookAndFeelException {
 	// Look and feel

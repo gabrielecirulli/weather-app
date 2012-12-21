@@ -1,15 +1,15 @@
-package weatherapp;
+package forecastwindow;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.io.IOException;
-import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPathExpressionException;
 import org.xml.sax.SAXException;
+import weatherapp.Information;
 
-class ForecastWindow extends JFrame {
+public class ForecastWindow extends JFrame {
 
     private final LocationSelectorPanel locationSelector;
     private final LocationWeatherPanel locationWeather;

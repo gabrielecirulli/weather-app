@@ -1,5 +1,6 @@
 package weatherapp;
 
+import forecastwindow.ForecastWindow;
 import java.io.IOException;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPathExpressionException;

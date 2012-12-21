@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package weatherapp;
+package forecastwindow;
 
 import java.awt.Color;
 import javax.swing.JLabel;

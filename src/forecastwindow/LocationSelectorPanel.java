@@ -1,5 +1,7 @@
-package weatherapp;
+package forecastwindow;
 
+import weatherapp.Utility;
+import yahooweather.YahooLocationLoader;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -22,7 +24,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import javax.xml.xpath.XPathExpressionException;
 
-class LocationSelectorPanel extends JPanel implements ItemListener {
+public class LocationSelectorPanel extends JPanel implements ItemListener {
 
     private final JComboBox locationSelector;
     private Map<Integer, String> locations;

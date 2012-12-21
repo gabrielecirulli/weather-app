@@ -1,4 +1,4 @@
-package weatherapp;
+package yahooweather;
 
 public class YahooWeather {
     private String location;

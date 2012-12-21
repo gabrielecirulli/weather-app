@@ -12,16 +12,16 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-class DocumentParser {
+public class DocumentInfoExtractor {
 
     private final DocumentBuilder builder;
     private final XPath xPath;
     private final Document XMLDocument;
     // Flags
-    static final int NUMERIC = 1;
-    static final int TEXTUAL = 2;
+    public static final int NUMERIC = 1;
+    public static final int TEXTUAL = 2;
 
-    DocumentParser(String documentURL) throws
+    public DocumentInfoExtractor(String documentURL) throws
             ParserConfigurationException, SAXException, IOException {
 
         DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
@@ -34,7 +34,7 @@ class DocumentParser {
 
     public String getSingleItem(String xPathSelector)
             throws XPathExpressionException {
-        return this.getSingleItem(xPathSelector, DocumentParser.TEXTUAL);
+        return this.getSingleItem(xPathSelector, DocumentInfoExtractor.TEXTUAL);
     }
 
     public String getSingleItem(String xPathSelector, int FLAG) throws XPathExpressionException {
@@ -44,7 +44,7 @@ class DocumentParser {
 
         String textContent = nodes.item(0).getTextContent();
 
-        if (textContent.trim().isEmpty() && FLAG == DocumentParser.NUMERIC) {
+        if (textContent.trim().isEmpty() && FLAG == DocumentInfoExtractor.NUMERIC) {
             textContent = "0";
         }
         

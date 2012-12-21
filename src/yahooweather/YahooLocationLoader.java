@@ -1,4 +1,4 @@
-package weatherapp;
+package yahooweather;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -6,8 +6,10 @@ import java.util.Map;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPathExpressionException;
 import org.xml.sax.SAXException;
+import weatherapp.DocumentInfoExtractor;
+import weatherapp.Information;
 
-class YahooLocationLoader {
+public class YahooLocationLoader {
 
     // Formats
     private static final String locationAPIBaseURL =
@@ -26,9 +28,9 @@ class YahooLocationLoader {
 	    ParserConfigurationException, SAXException, IOException, XPathExpressionException {
 	String locationURL = String.format( locationFormat, WOEID, appID );
 
-	DocumentParser documentParser = new DocumentParser( locationURL );
+	DocumentInfoExtractor documentInfoExtractor = new DocumentInfoExtractor( locationURL );
 
-	return documentParser.getSingleItem( "//name" );
+	return documentInfoExtractor.getSingleItem( "//name" );
     }
 
     public static Map<Integer, String> fetchSubLocations( int WOEID, int type )
@@ -37,17 +39,17 @@ class YahooLocationLoader {
 	String subLocationURL = String.
 		format( subLocationFormat, WOEID, appID );
 	System.out.println( subLocationURL );
-	DocumentParser documentParser = new DocumentParser( subLocationURL );
+	DocumentInfoExtractor documentInfoExtractor = new DocumentInfoExtractor( subLocationURL );
 
 	HashMap<Integer, String> result = new HashMap<Integer, String>();
 
 	String WOEIDXPath = String.format( placeXPathFormat, type, "woeid" );
-	String[] WOEIDMatched = documentParser.getAllItems( WOEIDXPath );
+	String[] WOEIDMatched = documentInfoExtractor.getAllItems( WOEIDXPath );
 	final int WOEIDLength = WOEIDMatched.length;
 
 	String locationNameXPath = String.
 		format( placeXPathFormat, type, "name" );
-	String[] locations = documentParser.getAllItems( locationNameXPath );
+	String[] locations = documentInfoExtractor.getAllItems( locationNameXPath );
 
 	final int locationsLength = locations.length;
 
