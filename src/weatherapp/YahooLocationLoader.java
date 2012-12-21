@@ -52,10 +52,8 @@ class YahooLocationLoader {
 	final int locationsLength = locations.length;
 
 	if ( locationsLength != WOEIDLength ) {
-	    throw new Exception( "Risultati incoerenti trovati" );
+	    throw new Exception( "Incoherent results" );
 	}
-
-	System.out.println( "Vatrious asuhsuhs" );
 
 	for ( int i = 0; i < WOEIDLength; i++ ) {
 	    int currentWOEID = Integer.parseInt( WOEIDMatched[i] );

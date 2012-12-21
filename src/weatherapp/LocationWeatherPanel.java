@@ -5,7 +5,6 @@
 package weatherapp;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -22,7 +21,7 @@ class LocationWeatherPanel extends JPanel {
 	
 	this.setBackground( new Color(240, 240, 240) );
 	
-	JLabel label = new JLabel("hello");
+	JLabel label = new JLabel("Forecast goes here");
 	
 	this.add( label);
         
