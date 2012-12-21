@@ -25,10 +25,12 @@ public class YahooLocationLoader {
     public static final int PROVINCE = 9;
 
     public static String fetchLocationName( int WOEID ) throws
-	    ParserConfigurationException, SAXException, IOException, XPathExpressionException {
+	    ParserConfigurationException, SAXException, IOException,
+	    XPathExpressionException {
 	String locationURL = String.format( locationFormat, WOEID, appID );
 
-	DocumentInfoExtractor documentInfoExtractor = new DocumentInfoExtractor( locationURL );
+	DocumentInfoExtractor documentInfoExtractor =
+		new DocumentInfoExtractor( locationURL );
 
 	return documentInfoExtractor.getSingleItem( "//name" );
     }
@@ -39,7 +41,8 @@ public class YahooLocationLoader {
 	String subLocationURL = String.
 		format( subLocationFormat, WOEID, appID );
 	System.out.println( subLocationURL );
-	DocumentInfoExtractor documentInfoExtractor = new DocumentInfoExtractor( subLocationURL );
+	DocumentInfoExtractor documentInfoExtractor =
+		new DocumentInfoExtractor( subLocationURL );
 
 	HashMap<Integer, String> result = new HashMap<Integer, String>();
 
@@ -49,7 +52,8 @@ public class YahooLocationLoader {
 
 	String locationNameXPath = String.
 		format( placeXPathFormat, type, "name" );
-	String[] locations = documentInfoExtractor.getAllItems( locationNameXPath );
+	String[] locations = documentInfoExtractor.getAllItems( 
+		locationNameXPath );
 
 	final int locationsLength = locations.length;
 
