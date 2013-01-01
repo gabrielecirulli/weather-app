@@ -10,7 +10,7 @@ import yahooweather.YahooWeather;
 class LocationWeatherInformationPanel extends JPanel {
 
     JLabel temperature = new JLabel();
-    private DecimalFormat temperatureFormat = new DecimalFormat( "#.# °C" );;
+    private DecimalFormat temperatureFormat = new DecimalFormat( "#.#°" );;
 
     public LocationWeatherInformationPanel() {
 	temperature.setFont( temperature.getFont().deriveFont( 30f ) ); // Bigger font size
