@@ -1,28 +1,26 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-/**
- * Class Utility
- *
- */
 package weatherapp;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
 import java.awt.Image;
+import java.net.URL;
 import javax.swing.ImageIcon;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 public class Utility {
 
-    public static ImageIcon prepareScaledIcon( String name, int width, int height ) {
-	ImageIcon originalIcon = new ImageIcon( ClassLoader.getSystemResource(
-		name ) );
+    public static URL loadResource( String resourceName ) {
+	return ClassLoader.getSystemResource( resourceName );
+    }
+
+    public static ImageIcon prepareScaledIcon( String name, int width,
+	    int height ) {
+	ImageIcon originalIcon = new ImageIcon( loadResource( name ) );
 
 	return new ImageIcon( originalIcon.getImage().getScaledInstance( width,
 		height, Image.SCALE_SMOOTH ) );
@@ -44,11 +42,9 @@ public class Utility {
 	    InstantiationException, IllegalAccessException,
 	    UnsupportedLookAndFeelException {
 	// Look and feel
-	UIManager.setLookAndFeel( "com.seaglasslookandfeel.SeaGlassLookAndFeel" );
-	
-	
-	
-	
+	UIManager.
+		setLookAndFeel( "com.seaglasslookandfeel.SeaGlassLookAndFeel" );
+
 	// Fonts
 	String[] allFonts =
 		GraphicsEnvironment.getLocalGraphicsEnvironment().
@@ -71,6 +67,7 @@ public class Utility {
 	    selectedFont = "SansSerif";
 	}
 
+	// Set all resources
 	Font uiFont = new Font( selectedFont, Font.PLAIN, 13 );
 	UIManager.put( "Button.font", uiFont );
 	UIManager.put( "ToggleButton.font", uiFont );
