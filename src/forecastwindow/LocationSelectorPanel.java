@@ -1,7 +1,5 @@
 package forecastwindow;
 
-import weatherapp.Utility;
-import yahooweather.YahooLocationLoader;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -23,6 +21,8 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import javax.xml.xpath.XPathExpressionException;
+import weatherapp.Utility;
+import yahooweather.YahooLocationLoader;
 
 public class LocationSelectorPanel extends JPanel implements ItemListener {
 
@@ -48,7 +48,6 @@ public class LocationSelectorPanel extends JPanel implements ItemListener {
 	this.upButton = this.prepareIconButton( "upArrow.png" );
 
 	this.setBackground( new Color( 60, 60, 60 ) );
-
 
 	Utility.addComponents( this,
 		new Component[]{
