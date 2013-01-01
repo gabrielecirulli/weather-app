@@ -15,10 +15,6 @@ import yahooweather.YahooForecastLoader;
 import yahooweather.YahooLocationLoader;
 import yahooweather.YahooWeather;
 
-/**
- *
- * @author 5ia
- */
 class LocationWeatherPanel extends JPanel {
 
     JLabel locationName = new JLabel();
