@@ -3,6 +3,7 @@ package yahooweather;
 public class YahooWeather {
     private String location;
     private String date;
+    private int conditionCode;
     private String description;
     private double temperature;
     private double humidity;
@@ -29,6 +30,14 @@ public class YahooWeather {
         this.date = date;
     }
 
+    public int getConditionCode() {
+        return conditionCode;
+    }
+
+    public void setConditionCode(int conditionCode) {
+        this.conditionCode = conditionCode;
+    }
+    
     public String getDescription() {
         return description;
     }

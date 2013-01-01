@@ -24,6 +24,10 @@ public class YahooForecastLoader {
 
 	result.setDate( documentInfoExtractor.getSingleItem( "//pubDate" ) );
 
+	result.setConditionCode( Integer.parseInt( documentInfoExtractor.
+		getSingleItem(
+		"//condition/@code" ) ) );
+
 	result.setDescription(
 		documentInfoExtractor.getSingleItem( "//condition/@text" ) );
 
