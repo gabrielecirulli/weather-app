@@ -1,13 +1,17 @@
 package weatherapp;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
+import java.awt.GridBagConstraints;
 import java.awt.Image;
+import java.awt.Insets;
 import java.net.URL;
 import javax.swing.ImageIcon;
+import javax.swing.UIDefaults;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -99,5 +103,20 @@ public class Utility {
 	UIManager.put( "ToolBar.font", uiFont );
 	UIManager.put( "ToolTip.font", uiFont );
 	UIManager.put( "Tree.font", uiFont );
+    }
+
+    public static void resetConstraints( GridBagConstraints constraints ) {
+	// Reset to default constraints
+	constraints.gridx = GridBagConstraints.RELATIVE;
+	constraints.gridy = GridBagConstraints.RELATIVE;
+	constraints.gridwidth = 1;
+	constraints.gridheight = 1;
+	constraints.weightx = 0;
+	constraints.weighty = 0;
+	constraints.anchor = GridBagConstraints.CENTER;
+	constraints.fill = GridBagConstraints.NONE;
+	constraints.insets = new Insets( 0, 0, 0, 0 );
+	constraints.ipadx = 0;
+	constraints.ipady = 0;
     }
 }
