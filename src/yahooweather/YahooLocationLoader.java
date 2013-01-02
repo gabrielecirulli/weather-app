@@ -17,9 +17,11 @@ public class YahooLocationLoader {
     private static final String locationFormat = locationAPIBaseURL +
 	    "place/%d?appid=%s";
     private static final String subLocationFormat = locationAPIBaseURL +
-	    "place/%d/children?appid=%s";
+	    "place/%d/children;count=10000?appid=%s";
+    private static final String parentLocationFormat = locationAPIBaseURL +
+	    "place/%d/parent?appid=%s";
     private static final String placeXPathFormat =
-	    "//place[placeTypeName/@code = '%d']/%s";
+	    "//place[(placeTypeName/@code = 7) or (placeTypeName/@code = 8) or (placeTypeName/@code = 9) or (placeTypeName/@code = 10)]/%s";
     private static final String appID = Information.getLongAppID();
     // Type codes
     public static final int PROVINCE = 9;
@@ -46,13 +48,13 @@ public class YahooLocationLoader {
 
 	HashMap<Integer, String> result = new HashMap<Integer, String>();
 
-	String WOEIDXPath = String.format( placeXPathFormat, type, "woeid" );
+	String WOEIDXPath = String.format( placeXPathFormat, "woeid" );
 	String[] WOEIDMatched = documentInfoExtractor.getAllItems( WOEIDXPath );
 	final int WOEIDLength = WOEIDMatched.length;
 
 	String locationNameXPath = String.
-		format( placeXPathFormat, type, "name" );
-	String[] locations = documentInfoExtractor.getAllItems( 
+		format( placeXPathFormat, "name" );
+	String[] locations = documentInfoExtractor.getAllItems(
 		locationNameXPath );
 
 	final int locationsLength = locations.length;
@@ -69,11 +71,16 @@ public class YahooLocationLoader {
 	    System.out.println( currentWOEID + ": " + locations[i] );
 	}
 
-	//result.put( WOEID, subLocationURL )
-
-
-	//result.
-
 	return result;
+    }
+
+    public static int fetchParentLocation( int WOEID ) throws
+	    ParserConfigurationException, SAXException, IOException, XPathExpressionException {
+	String parentLocationURL = String.format( parentLocationFormat, WOEID, appID );
+	System.out.println( parentLocationURL );
+
+	DocumentInfoExtractor documentInfoExtractor = new DocumentInfoExtractor( parentLocationURL );
+	
+	return Integer.parseInt( documentInfoExtractor.getSingleItem( "//woeid") );
     }
 }
