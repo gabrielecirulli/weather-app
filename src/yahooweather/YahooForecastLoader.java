@@ -33,7 +33,8 @@ public class YahooForecastLoader {
 
 	result.setHumidity( Double.parseDouble( documentInfoExtractor.
 		getSingleItem(
-		"//atmosphere/@humidity", DocumentInfoExtractor.NUMERIC ) ) );
+		"//atmosphere/@humidity", DocumentInfoExtractor.NUMERIC ) ) /
+		100 );
 
 	result.setLocation( String.format( "%s, %s", documentInfoExtractor.
 		getSingleItem(
