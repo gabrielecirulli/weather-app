@@ -41,7 +41,7 @@ class LocationWeatherPanel extends JPanel {
 	
 	constraints.gridx = 0;
 	constraints.gridy = 0;
-	constraints.insets = new Insets( 10, 0, 1, 0 );
+	constraints.insets = new Insets( 10, 10, 1, 10 );
 	this.add( locationName, constraints );
 	
 	Utility.resetConstraints( constraints );
