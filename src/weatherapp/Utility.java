@@ -37,6 +37,12 @@ public class Utility {
     public static void performSetup() throws ClassNotFoundException,
 	    InstantiationException, IllegalAccessException,
 	    UnsupportedLookAndFeelException {
+	// OS X menubars
+	if ( System.getProperty( "os.name" ).equals( "Mac OS X" ) ) {
+	    System.setProperty( "apple.laf.useScreenMenuBar", "true" );
+	    System.setProperty( "com.apple.mrj.application.apple.menu.about.name", Information.getAppName() );
+	}
+
 	// Look and feel
 	UIManager.
 		setLookAndFeel( "com.seaglasslookandfeel.SeaGlassLookAndFeel" );
@@ -96,6 +102,9 @@ public class Utility {
 	UIManager.put( "ToolBar.font", uiFont );
 	UIManager.put( "ToolTip.font", uiFont );
 	UIManager.put( "Tree.font", uiFont );
+
+	// Apple menu bar
+
     }
 
     public static void resetConstraints( GridBagConstraints constraints ) {
