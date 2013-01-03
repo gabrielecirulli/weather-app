@@ -1,7 +1,7 @@
 # Weather App
 A simple weather forecast application based on the Yahoo APIs, written as an exercise in Java development.
 
-![Screenshot](http://www.gabrielecirulli.com/p//Forecast-20130102-003924.png)
+![Screenshot](http://www.gabrielecirulli.com/p//Forecast-20130103-025446.png)
 
 ## Other things
  - The weather icons used in this project are PNGs converted from the [Meteocons](http://www.alessioatzeni.com/meteocons/) set by **Alessio Atzeni**.
