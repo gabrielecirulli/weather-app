@@ -1,5 +1,6 @@
 package forecastwindow;
 
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -18,13 +19,14 @@ class LocationWeatherInformationPanel extends JPanel {
     private DecimalFormat humidityFormat = new DecimalFormat( "Humidity: #.#%" );
 
     public LocationWeatherInformationPanel() {
-	temperature.setFont( temperature.getFont().deriveFont( 30f ) ); // Bigger font size
+	this.temperature.setFont( this.temperature.getFont().deriveFont( 30f ) ); // Bigger font size
+	this.description.setFont( this.description.getFont().deriveFont( 14f ).deriveFont( Font.BOLD ) ); // Bold
 
 	this.setLayout( new GridBagLayout() );
 	GridBagConstraints constraints = new GridBagConstraints();
 
 	constraints.gridwidth = 2;
-	constraints.ipady = 10;
+	constraints.insets = new Insets( 10, 0, 5, 0);
 	this.add(description, constraints);
 	
 	Utility.resetConstraints(constraints);

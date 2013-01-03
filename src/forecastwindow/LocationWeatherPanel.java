@@ -21,6 +21,7 @@ import yahooweather.YahooWeather;
 class LocationWeatherPanel extends JPanel {
     
     JLabel locationName = new JLabel();
+    JLabel weatherDate = new JLabel();
     JLabel weatherCondition = new JLabel();
     LocationWeatherInformationPanel informationPanel =
 	    new LocationWeatherInformationPanel();
@@ -32,23 +33,28 @@ class LocationWeatherPanel extends JPanel {
 	this.setBackground( new Color( 240, 240, 240 ) );
 	
 	this.locationName.setFont( this.locationName.getFont().deriveFont( 20f ).deriveFont( Font.BOLD ) );
+	this.weatherDate.setForeground( Color.gray );
 	
 	this.setLayout( new GridBagLayout() );
 	
 	GridBagConstraints constraints = new GridBagConstraints();
 	
-	Utility.resetConstraints( constraints );
 	constraints.gridx = 0;
 	constraints.gridy = 0;
-	constraints.insets = new Insets( 10, 0, 10, 0);
+	constraints.insets = new Insets( 10, 0, 1, 0 );
 	this.add( locationName, constraints );
 	
 	Utility.resetConstraints( constraints );
 	constraints.gridy = 1;
-	this.add( weatherCondition, constraints );
+	constraints.insets = new Insets( 0, 0, 20, 0 );
+	this.add( weatherDate, constraints );
 	
 	Utility.resetConstraints( constraints );
 	constraints.gridy = 2;
+	this.add( weatherCondition, constraints );
+	
+	Utility.resetConstraints( constraints );
+	constraints.gridy = 3;
 	constraints.insets = new Insets( 10, 10, 10, 10 );
 	this.add( informationPanel, constraints );
 	
@@ -63,7 +69,9 @@ class LocationWeatherPanel extends JPanel {
 	
 	YahooWeather weather = YahooForecastLoader.fetchForecast( WOEID );
 	
-	ImageIcon weatherIcon = Utility.prepareScaledIcon( String.format( "weather/%02d.png", weather.getConditionCode() ), new Dimension( 150, 150) );
+	weatherDate.setText( weather.getDate() );
+	
+	ImageIcon weatherIcon = Utility.prepareScaledIcon( String.format( "weather/%02d.png", weather.getConditionCode() ), new Dimension( 150, 150 ) );
 	weatherCondition.setIcon( weatherIcon );
 	
 	informationPanel.showWeatherInformation( weather );
