@@ -10,6 +10,7 @@ import java.awt.GridBagConstraints;
 import java.awt.Image;
 import java.awt.Insets;
 import java.net.URL;
+import java.util.Locale;
 import javax.swing.ImageIcon;
 import javax.swing.UIDefaults;
 import javax.swing.UIManager;
@@ -37,6 +38,9 @@ public class Utility {
     public static void performSetup() throws ClassNotFoundException,
 	    InstantiationException, IllegalAccessException,
 	    UnsupportedLookAndFeelException {
+	// Locale
+	Locale.setDefault( Locale.ENGLISH );
+	
 	// OS X menubars
 	if ( System.getProperty( "os.name" ).equals( "Mac OS X" ) ) {
 	    System.setProperty( "apple.laf.useScreenMenuBar", "true" );
