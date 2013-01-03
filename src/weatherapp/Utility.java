@@ -34,13 +34,6 @@ public class Utility {
 	return prepareScaledIcon( name, dimension.width, dimension.height );
     }
 
-    public static void addComponents( Container destination,
-	    Component[] components ) {
-	for ( Component component : components ) {
-	    destination.add( component );
-	}
-    }
-
     public static void performSetup() throws ClassNotFoundException,
 	    InstantiationException, IllegalAccessException,
 	    UnsupportedLookAndFeelException {

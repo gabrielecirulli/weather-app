@@ -3,6 +3,8 @@ package forecastwindow;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -40,7 +42,6 @@ public class LocationSelectorPanel extends JPanel implements ItemListener,
 
     public LocationSelectorPanel( int baseWOEID ) throws
 	    XPathExpressionException, Exception {
-	this.setLayout( new BoxLayout( this, BoxLayout.X_AXIS ) );
 
 	this.currentLocation = new JLabel();
 	this.currentLocation.setForeground( new Color( 250, 250, 250 ) );
@@ -53,15 +54,30 @@ public class LocationSelectorPanel extends JPanel implements ItemListener,
 
 	this.setBackground( new Color( 60, 60, 60 ) );
 
-	Utility.addComponents( this,
-		new Component[]{
-		    this.currentLocation,
-		    Box.createRigidArea( new Dimension( 10, 1 ) ),
-		    this.locationSelector,
-		    new Box.Filler( new Dimension( 10, 1 ), new Dimension( 10,
-		    1 ), new Dimension( Short.MAX_VALUE, 1 ) ),
-		    this.upButton
-		} );
+	this.setLayout( new GridBagLayout() );
+	GridBagConstraints constraints = new GridBagConstraints();
+
+	constraints.weightx = 0;
+	constraints.gridx = 0;
+	constraints.fill = GridBagConstraints.HORIZONTAL;
+	constraints.anchor = GridBagConstraints.WEST;
+	this.add( this.currentLocation, constraints );
+
+	Utility.resetConstraints( constraints );
+	constraints.weightx = 1;
+	constraints.gridx = 1;
+	constraints.anchor = GridBagConstraints.WEST;
+	constraints.fill = GridBagConstraints.HORIZONTAL;
+	constraints.gridx = 1;
+	constraints.insets = new Insets( 0, 10, 0, 10 );
+	this.add( this.locationSelector, constraints );
+
+	Utility.resetConstraints( constraints );
+	constraints.weightx = 0;
+	constraints.gridx = 2;
+	constraints.anchor = GridBagConstraints.EAST;
+	constraints.fill = GridBagConstraints.HORIZONTAL;
+	this.add( this.upButton, constraints );
 
 	this.setBorder( new EmptyBorder( new Insets( 4, 10, 4, 10 ) ) );
 
@@ -82,8 +98,9 @@ public class LocationSelectorPanel extends JPanel implements ItemListener,
     }
 
     public void itemStateChanged( ItemEvent e ) {
-	if ( e.getSource() == this.locationSelector && e.getStateChange() == ItemEvent.SELECTED ) {
-	    
+	if ( e.getSource() == this.locationSelector && e.getStateChange() ==
+		ItemEvent.SELECTED ) {
+
 	    System.out.println( "--------------------------" );
 	    System.out.println( "CHNAGED" );
 
@@ -113,7 +130,7 @@ public class LocationSelectorPanel extends JPanel implements ItemListener,
     public void actionPerformed( ActionEvent event ) {
 	if ( event.getSource() == upButton ) {
 	    try {
-		this.populateByWOEID( YahooLocationLoader.fetchParentLocation(this.WOEID));
+		this.populateByWOEID( YahooLocationLoader.fetchParentLocation( this.WOEID ) );
 	    } catch ( XPathExpressionException ex ) {
 		Logger.getLogger( LocationSelectorPanel.class.getName() ).
 			log( Level.SEVERE, null, ex );
