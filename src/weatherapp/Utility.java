@@ -13,30 +13,30 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 public class Utility {
-
+    
     public static URL loadResource( String resourceName ) {
 	return ClassLoader.getSystemResource( resourceName );
     }
-
+    
     public static ImageIcon prepareScaledIcon( String name, int width,
 	    int height ) {
 	ImageIcon originalIcon = new ImageIcon( loadResource( name ) );
-
+	
 	return new ImageIcon( originalIcon.getImage().getScaledInstance( width,
 		height, Image.SCALE_SMOOTH ) );
-
+	
     }
-
+    
     public static ImageIcon prepareScaledIcon( String name, Dimension dimension ) {
 	return prepareScaledIcon( name, dimension.width, dimension.height );
     }
-
+    
     public static void performSetup() throws ClassNotFoundException,
 	    InstantiationException, IllegalAccessException,
 	    UnsupportedLookAndFeelException {
 	// Locale
 	Locale.setDefault( Locale.ENGLISH );
-	
+
 	// OS X menubars
 	if ( System.getProperty( "os.name" ).equals( "Mac OS X" ) ) {
 	    System.setProperty( "apple.laf.useScreenMenuBar", "true" );
@@ -44,13 +44,13 @@ public class Utility {
 	}
 
 	// Look and feel
-	//UIManager.setLookAndFeel( "com.seaglasslookandfeel.SeaGlassLookAndFeel" );
-	
+	UIManager.setLookAndFeel( "com.seaglasslookandfeel.SeaGlassLookAndFeel" );
+
 	// Fonts
 	String[] allFonts =
 		GraphicsEnvironment.getLocalGraphicsEnvironment().
 		getAvailableFontFamilyNames();
-
+	
 	String selectedFont = null;
 	for ( String fontName : allFonts ) {
 	    if ( fontName.equals( "Helvetica Neue" ) ) {
@@ -102,7 +102,7 @@ public class Utility {
 	UIManager.put( "ToolTip.font", uiFont );
 	UIManager.put( "Tree.font", uiFont );
     }
-
+    
     public static void resetConstraints( GridBagConstraints constraints ) {
 	// Reset to default constraints
 	constraints.gridx = GridBagConstraints.RELATIVE;
