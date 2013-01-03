@@ -21,7 +21,7 @@ public class YahooLocationLoader {
     private static final String parentLocationFormat = locationAPIBaseURL +
 	    "place/%d/parent?appid=%s";
     private static final String placeXPathFormat =
-	    "//place[(placeTypeName/@code = 7) or (placeTypeName/@code = 8) or (placeTypeName/@code = 9) or (placeTypeName/@code = 10)]/%s";
+	    "//place[(placeTypeName/@code = 8) or (placeTypeName/@code = 9) or (placeTypeName/@code = 10) or (placeTypeName/@code = 12)]/%s";
     private static final String appID = Information.getLongAppID();
     // Type codes
     public static final int PROVINCE = 9;
