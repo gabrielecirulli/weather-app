@@ -1,5 +1,6 @@
 package yahooweather;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -75,12 +76,16 @@ public class YahooLocationLoader {
     }
 
     public static int fetchParentLocation( int WOEID ) throws
-	    ParserConfigurationException, SAXException, IOException, XPathExpressionException {
+	    ParserConfigurationException, SAXException, IOException,
+	    XPathExpressionException {
 	String parentLocationURL = String.format( parentLocationFormat, WOEID, appID );
 	System.out.println( parentLocationURL );
 
-	DocumentInfoExtractor documentInfoExtractor = new DocumentInfoExtractor( parentLocationURL );
-	
-	return Integer.parseInt( documentInfoExtractor.getSingleItem( "//woeid") );
+	try {
+	    DocumentInfoExtractor documentInfoExtractor = new DocumentInfoExtractor( parentLocationURL );
+	    return Integer.parseInt( documentInfoExtractor.getSingleItem( "//woeid" ) );
+	} catch ( FileNotFoundException e ) {
+	    return 0;
+	}
     }
 }
