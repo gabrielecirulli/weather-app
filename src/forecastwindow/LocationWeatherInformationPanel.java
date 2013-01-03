@@ -20,6 +20,9 @@ class LocationWeatherInformationPanel extends JPanel {
     private DecimalFormat humidityFormat = new DecimalFormat( "Humidity: #.#%" );
     private JLabel pressure = new JLabel();
     private DecimalFormat pressureFormat = new DecimalFormat( "#.## mbar" );
+    private JLabel wind = new JLabel();
+    private DecimalFormat windDirection = new DecimalFormat( "#.#°" );
+    private DecimalFormat windSpeed = new DecimalFormat( "#.# km/h" );
     
     public LocationWeatherInformationPanel() {
 	this.temperature.setFont( this.temperature.getFont().deriveFont( 30f ) ); // Bigger font size
@@ -52,6 +55,12 @@ class LocationWeatherInformationPanel extends JPanel {
 	constraints.gridwidth = 2;
 	constraints.insets = new Insets( 10, 0, 0, 0 );
 	this.add( pressure, constraints );
+	
+	Utility.resetConstraints( constraints );
+	constraints.gridy = 4;
+	constraints.gridwidth = 2;
+	constraints.insets = new Insets( 10, 0, 0, 0 );
+	this.add( wind, constraints );
     }
     
     void showWeatherInformation( YahooWeather weather ) {
@@ -59,8 +68,9 @@ class LocationWeatherInformationPanel extends JPanel {
 	temperature.setText( temperatureFormat.format( weather.
 		getTemperature() ) );
 	humidity.setText( humidityFormat.format( weather.getHumidity() ) );
-	pressure.setText( String.format( "%s (%s)", pressureFormat.format( weather.getPressure() ), ( weather.getPressureDirection() ==
+	pressure.setText( String.format( "Pressure: %s (%s)", pressureFormat.format( weather.getPressure() ), ( weather.getPressureDirection() ==
 		0 ? "stationary" : ( weather.getPressureDirection() == 1
 		? "increasing" : "decreasing" ) ) ) );
+	wind.setText( String.format( "Wind: %s at %s", windDirection.format( weather.getWindDirection() ), windSpeed.format( weather.getWindSpeed() ) ) );
     }
 }
