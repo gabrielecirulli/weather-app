@@ -1,6 +1,7 @@
 package forecastwindow;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -62,9 +63,8 @@ class LocationWeatherPanel extends JPanel {
 	
 	YahooWeather weather = YahooForecastLoader.fetchForecast( WOEID );
 	
-	String weatherImagePath = String.format( "weather/%02d.png", 1 );
-	weatherCondition.setIcon( new ImageIcon( Utility.loadResource(
-		weatherImagePath ) ) );
+	ImageIcon weatherIcon = Utility.prepareScaledIcon( String.format( "weather/%02d.png", weather.getConditionCode() ), new Dimension( 150, 150) );
+	weatherCondition.setIcon( weatherIcon );
 	
 	informationPanel.showWeatherInformation( weather );
     }
