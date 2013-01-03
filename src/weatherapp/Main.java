@@ -14,12 +14,7 @@ public class Main {
     public static void main( String[] args ) throws SAXException, IOException,
 	    ParserConfigurationException, XPathExpressionException, Exception {
 
-	
-
 	Utility.performSetup();
-
-
-
 
 	// Starting the window
 	SwingUtilities.invokeLater( new Runnable() {

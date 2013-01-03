@@ -44,9 +44,8 @@ public class Utility {
 	}
 
 	// Look and feel
-	UIManager.
-		setLookAndFeel( "com.seaglasslookandfeel.SeaGlassLookAndFeel" );
-
+	UIManager.setLookAndFeel( "com.seaglasslookandfeel.SeaGlassLookAndFeel" );
+	
 	// Fonts
 	String[] allFonts =
 		GraphicsEnvironment.getLocalGraphicsEnvironment().
@@ -102,9 +101,6 @@ public class Utility {
 	UIManager.put( "ToolBar.font", uiFont );
 	UIManager.put( "ToolTip.font", uiFont );
 	UIManager.put( "Tree.font", uiFont );
-
-	// Apple menu bar
-
     }
 
     public static void resetConstraints( GridBagConstraints constraints ) {
