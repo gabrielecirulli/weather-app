@@ -10,6 +10,7 @@ import java.io.IOException;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.BevelBorder;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPathExpressionException;
 import org.xml.sax.SAXException;
@@ -40,7 +41,7 @@ class LocationWeatherPanel extends JPanel {
 	Utility.resetConstraints( constraints );
 	constraints.gridx = 0;
 	constraints.gridy = 0;
-	constraints.ipady = 20;
+	constraints.insets = new Insets( 10, 0, 10, 0);
 	this.add( locationName, constraints );
 	
 	Utility.resetConstraints( constraints );
