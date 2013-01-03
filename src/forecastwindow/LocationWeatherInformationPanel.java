@@ -15,7 +15,7 @@ class LocationWeatherInformationPanel extends JPanel {
 
     private JLabel description = new JLabel();
     private JLabel temperature = new JLabel();
-    private DecimalFormat temperatureFormat = new DecimalFormat( "#.#°" );
+    private DecimalFormat temperatureFormat = new DecimalFormat( "#.# °C" );
     private JLabel humidity = new JLabel();
     private DecimalFormat humidityFormat = new DecimalFormat( "Humidity: #.#%" );
     private JLabel pressure = new JLabel();
