@@ -28,8 +28,7 @@ import javax.xml.xpath.XPathExpressionException;
 import weatherapp.Utility;
 import yahooweather.YahooLocationLoader;
 
-public class LocationSelectorPanel extends JPanel implements ItemListener,
-	ActionListener {
+public class LocationSelectorPanel extends JPanel implements ActionListener {
 
     int WOEID;
     private final JComboBox locationSelector;
@@ -47,7 +46,7 @@ public class LocationSelectorPanel extends JPanel implements ItemListener,
 	this.currentLocation.setForeground( new Color( 250, 250, 250 ) );
 
 	this.locationSelector = new JComboBox();
-	this.locationSelector.addItemListener( this );
+	this.locationSelector.addActionListener( this );
 
 	this.upButton = this.prepareIconButton( "upArrow.png" );
 	this.upButton.addActionListener( this );
@@ -93,14 +92,21 @@ public class LocationSelectorPanel extends JPanel implements ItemListener,
 		setModel( new DefaultComboBoxModel( this.locations.values().
 		toArray() ) );
 
-	this.currentLocation.
-		setText( YahooLocationLoader.fetchLocationName( WOEID ) );
+	this.currentLocation.setText( YahooLocationLoader.fetchLocationName( WOEID ) );
     }
 
-    public void itemStateChanged( ItemEvent e ) {
-	if ( e.getSource() == this.locationSelector && e.getStateChange() ==
-		ItemEvent.SELECTED ) {
-
+    public void actionPerformed( ActionEvent event ) {
+	if ( event.getSource() == upButton ) {
+	    try {
+		this.showLocation( YahooLocationLoader.fetchParentLocation( this.WOEID ) );
+	    } catch ( XPathExpressionException ex ) {
+		Logger.getLogger( LocationSelectorPanel.class.getName() ).
+			log( Level.SEVERE, null, ex );
+	    } catch ( Exception ex ) {
+		Logger.getLogger( LocationSelectorPanel.class.getName() ).
+			log( Level.SEVERE, null, ex );
+	    }
+	} else if ( event.getSource() == locationSelector ) {
 	    System.out.println( "--------------------------" );
 	    System.out.println( "CHNAGED" );
 
@@ -123,20 +129,6 @@ public class LocationSelectorPanel extends JPanel implements ItemListener,
 		    }
 		    return;
 		}
-	    }
-	}
-    }
-
-    public void actionPerformed( ActionEvent event ) {
-	if ( event.getSource() == upButton ) {
-	    try {
-		this.showLocation( YahooLocationLoader.fetchParentLocation( this.WOEID ) );
-	    } catch ( XPathExpressionException ex ) {
-		Logger.getLogger( LocationSelectorPanel.class.getName() ).
-			log( Level.SEVERE, null, ex );
-	    } catch ( Exception ex ) {
-		Logger.getLogger( LocationSelectorPanel.class.getName() ).
-			log( Level.SEVERE, null, ex );
 	    }
 	}
     }
