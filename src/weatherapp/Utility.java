@@ -44,7 +44,7 @@ public class Utility {
 	}
 
 	// Look and feel
-	UIManager.setLookAndFeel( "com.seaglasslookandfeel.SeaGlassLookAndFeel" );
+	//UIManager.setLookAndFeel( "com.seaglasslookandfeel.SeaGlassLookAndFeel" );
 	
 	// Fonts
 	String[] allFonts =
