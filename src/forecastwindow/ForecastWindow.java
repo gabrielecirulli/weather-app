@@ -106,7 +106,6 @@ public class ForecastWindow extends JFrame implements ActionListener {
 	    this.fileMenu.add( this.closeItem );
 
 	    this.setJMenuBar( this.menuBar );
-	    this.menuBar.setVisible( false);
 	}
     }
 }
