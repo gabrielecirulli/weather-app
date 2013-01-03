@@ -130,7 +130,7 @@ public class LocationSelectorPanel extends JPanel implements ItemListener,
     public void actionPerformed( ActionEvent event ) {
 	if ( event.getSource() == upButton ) {
 	    try {
-		this.populateByWOEID( YahooLocationLoader.fetchParentLocation( this.WOEID ) );
+		this.showLocation( YahooLocationLoader.fetchParentLocation( this.WOEID ) );
 	    } catch ( XPathExpressionException ex ) {
 		Logger.getLogger( LocationSelectorPanel.class.getName() ).
 			log( Level.SEVERE, null, ex );
