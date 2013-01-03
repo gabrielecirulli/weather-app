@@ -1,8 +1,5 @@
 package weatherapp;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
@@ -12,7 +9,6 @@ import java.awt.Insets;
 import java.net.URL;
 import java.util.Locale;
 import javax.swing.ImageIcon;
-import javax.swing.UIDefaults;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 

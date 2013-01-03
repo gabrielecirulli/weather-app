@@ -98,15 +98,9 @@ class LocationWeatherPanel extends JPanel {
 		try {
 		    YahooWeather weather = YahooForecastLoader.fetchForecast( WOEID );
 		    outerClass.finalizeFetchForecast( weather );
-		} catch ( SAXException ex ) {
+		} catch ( Exception ex ) {
 		    Logger.getLogger( LocationWeatherPanel.class.getName() ).log( Level.SEVERE, null, ex );
-		} catch ( IOException ex ) {
-		    Logger.getLogger( LocationWeatherPanel.class.getName() ).log( Level.SEVERE, null, ex );
-		} catch ( XPathExpressionException ex ) {
-		    Logger.getLogger( LocationWeatherPanel.class.getName() ).log( Level.SEVERE, null, ex );
-		} catch ( ParserConfigurationException ex ) {
-		    Logger.getLogger( LocationWeatherPanel.class.getName() ).log( Level.SEVERE, null, ex );
-		}
+		} 
 	    }
 	} );
 
