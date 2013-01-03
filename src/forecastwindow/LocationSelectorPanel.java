@@ -68,7 +68,7 @@ public class LocationSelectorPanel extends JPanel implements ActionListener {
 	constraints.anchor = GridBagConstraints.WEST;
 	constraints.fill = GridBagConstraints.HORIZONTAL;
 	constraints.gridx = 1;
-	constraints.insets = new Insets( 0, 10, 0, 10 );
+	constraints.insets = new Insets( 0, 10, 0, 0 );
 	this.add( this.locationSelector, constraints );
 
 	Utility.resetConstraints( constraints );
@@ -76,6 +76,7 @@ public class LocationSelectorPanel extends JPanel implements ActionListener {
 	constraints.gridx = 2;
 	constraints.anchor = GridBagConstraints.EAST;
 	constraints.fill = GridBagConstraints.HORIZONTAL;
+	constraints.insets = new Insets( 0, 10, 0, 0 );
 	this.add( this.upButton, constraints );
 
 	this.setBorder( new EmptyBorder( new Insets( 4, 10, 4, 10 ) ) );
@@ -88,9 +89,15 @@ public class LocationSelectorPanel extends JPanel implements ActionListener {
 	this.WOEID = WOEID;
 	this.locations = YahooLocationLoader.fetchSubLocations( WOEID,
 		YahooLocationLoader.PROVINCE );
-	this.locationSelector.
-		setModel( new DefaultComboBoxModel( this.locations.values().
-		toArray() ) );
+	Object[] locationNames = this.locations.values().toArray();
+	if ( locationNames.length != 0 ) {
+	    this.locationSelector.setEnabled( true );
+	    this.locationSelector.setModel( new DefaultComboBoxModel( this.locations.values().toArray() ) );
+	} else {
+	    this.locationSelector.setEnabled( false );
+	    this.locationSelector.setModel( new DefaultComboBoxModel( new Object[]{
+			"No locations" } ) );
+	}
 
 	this.currentLocation.setText( YahooLocationLoader.fetchLocationName( WOEID ) );
     }
@@ -123,9 +130,8 @@ public class LocationSelectorPanel extends JPanel implements ActionListener {
 		    try {
 			this.showLocation( locationInfo.getKey() );
 		    } catch ( Exception ex ) {
-			Logger.
-				getLogger( LocationSelectorPanel.class.getName() ).
-				log( Level.SEVERE, null, ex );
+			System.out.println( "Show location error" );
+			Logger.getLogger( LocationSelectorPanel.class.getName() ).log( Level.SEVERE, null, ex );
 		    }
 		    return;
 		}
