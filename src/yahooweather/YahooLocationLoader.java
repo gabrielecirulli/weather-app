@@ -24,9 +24,7 @@ public class YahooLocationLoader {
     private static final String placeXPathFormat =
 	    "//place[(placeTypeName/@code = 8) or (placeTypeName/@code = 9) or (placeTypeName/@code = 10) or (placeTypeName/@code = 12)]/%s";
     private static final String appID = Information.getLongAppID();
-    // Type codes
-    public static final int PROVINCE = 9;
-
+    
     public static String fetchLocationName( int WOEID ) throws
 	    ParserConfigurationException, SAXException, IOException,
 	    XPathExpressionException {
@@ -38,7 +36,7 @@ public class YahooLocationLoader {
 	return documentInfoExtractor.getSingleItem( "//name" );
     }
 
-    public static Map<Integer, String> fetchSubLocations( int WOEID, int type )
+    public static Map<Integer, String> fetchSubLocations( int WOEID )
 	    throws XPathExpressionException, Exception {
 
 	String subLocationURL = String.

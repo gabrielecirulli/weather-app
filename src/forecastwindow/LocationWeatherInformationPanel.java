@@ -7,7 +7,6 @@ import java.awt.Insets;
 import java.text.DecimalFormat;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 import weatherapp.Utility;
 import yahooweather.YahooWeather;
 

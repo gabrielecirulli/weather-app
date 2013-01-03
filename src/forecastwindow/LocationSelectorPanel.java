@@ -1,22 +1,18 @@
 package forecastwindow;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
+import java.io.IOException;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -24,7 +20,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPathExpressionException;
+import org.xml.sax.SAXException;
 import weatherapp.Utility;
 import yahooweather.YahooLocationLoader;
 
@@ -39,10 +37,10 @@ public class LocationSelectorPanel extends JPanel implements ActionListener {
     private final Dimension buttonDimension = new Dimension( 30, 30 );
     private final JLabel currentLocation;
     
-    public LocationSelectorPanel( int baseWOEID ) throws
+    public LocationSelectorPanel() throws
 	    XPathExpressionException, Exception {
 	
-	this.currentLocation = new JLabel();
+	this.currentLocation = new JLabel( "Loading..." );
 	this.currentLocation.setForeground( new Color( 250, 250, 250 ) );
 	
 	this.locationSelector = new JComboBox();
@@ -81,14 +79,59 @@ public class LocationSelectorPanel extends JPanel implements ActionListener {
 	
 	this.setBorder( new EmptyBorder( new Insets( 4, 10, 4, 10 ) ) );
 	
-	this.populateByWOEID( baseWOEID );
+	final LocationSelectorPanel classReference = this;
+	SwingUtilities.invokeLater( new Runnable() {
+	    LocationSelectorPanel outsideClass = classReference;
+	    
+	    public void run() {
+		if ( outsideClass.parentWindow == null ) {
+		    outsideClass.parentWindow = ( ForecastWindow ) SwingUtilities.getWindowAncestor( outsideClass );
+		}
+	    }
+	} );
+
+	//this.populateByWOEID( baseWOEID );
     }
     
     private void populateByWOEID( int WOEID ) throws XPathExpressionException,
 	    Exception {
 	this.WOEID = WOEID;
-	this.locations = YahooLocationLoader.fetchSubLocations( WOEID,
-		YahooLocationLoader.PROVINCE );
+	
+	this.runFetchSubLocations( WOEID );
+	
+	this.runFetchLocationName( WOEID );
+    }
+    
+    private void runFetchSubLocations( int WOEID ) {
+	this.locationSelector.setEnabled( false );
+	this.locationSelector.setModel( new DefaultComboBoxModel( new Object[]{
+		    "Loading..." } ) );
+	
+	final int locationWOEID = WOEID;
+	final LocationSelectorPanel classReference = this;
+	Thread subLocationThread;
+	subLocationThread = new Thread( new Runnable() {
+	    int WOEID = locationWOEID;
+	    LocationSelectorPanel outerClass = classReference;
+	    
+	    public void run() {
+		try {
+		    Map<Integer, String> locations = YahooLocationLoader.fetchSubLocations( WOEID );
+		    outerClass.finalizeFetchSubLocations( locations );
+		} catch ( XPathExpressionException ex ) {
+		    Logger.getLogger( LocationSelectorPanel.class.getName() ).log( Level.SEVERE, null, ex );
+		} catch ( Exception ex ) {
+		    Logger.getLogger( LocationSelectorPanel.class.getName() ).log( Level.SEVERE, null, ex );
+		}
+	    }
+	} );
+	
+	subLocationThread.start();
+    }
+    
+    private void finalizeFetchSubLocations( Map<Integer, String> locations ) {
+	this.locations = locations;
+	
 	Object[] locationNames = this.locations.values().toArray();
 	this.upButton.setEnabled( true );
 	if ( locationNames.length != 0 ) {
@@ -100,16 +143,56 @@ public class LocationSelectorPanel extends JPanel implements ActionListener {
 			"No locations" } ) );
 	}
 	
-	this.currentLocation.setText( YahooLocationLoader.fetchLocationName( WOEID ) );
+	if ( this.parentWindow != null ) {
+	    this.parentWindow.signalLoadingComplete( ForecastWindow.LOADING_SUB_LOCATIONS );
+	}
+    }
+    
+    private void runFetchLocationName( int WOEID ) {
+	this.currentLocation.setText( "Loading..." );
+	
+	final int locationWOEID = WOEID;
+	final LocationSelectorPanel classReference = this;
+	Thread locationNameThread;
+	locationNameThread = new Thread( new Runnable() {
+	    int WOEID = locationWOEID;
+	    LocationSelectorPanel outerClass = classReference;
+	    
+	    public void run() {
+		try {
+		    String locationName = YahooLocationLoader.fetchLocationName( WOEID );
+		    outerClass.finalizeFetchLocationName( locationName );
+		} catch ( ParserConfigurationException ex ) {
+		    Logger.getLogger( LocationSelectorPanel.class.getName() ).log( Level.SEVERE, null, ex );
+		} catch ( SAXException ex ) {
+		    Logger.getLogger( LocationSelectorPanel.class.getName() ).log( Level.SEVERE, null, ex );
+		} catch ( IOException ex ) {
+		    Logger.getLogger( LocationSelectorPanel.class.getName() ).log( Level.SEVERE, null, ex );
+		} catch ( XPathExpressionException ex ) {
+		    Logger.getLogger( LocationSelectorPanel.class.getName() ).log( Level.SEVERE, null, ex );
+		}
+	    }
+	} );
+	
+	locationNameThread.start();
+    }
+    
+    private void finalizeFetchLocationName( String locationName ) {
+	this.currentLocation.setText( locationName );
+	
+	if ( this.parentWindow != null ) {
+	    this.parentWindow.signalLoadingComplete( ForecastWindow.LOADING_LOCATION_NAME );
+	}
     }
     
     public void actionPerformed( ActionEvent event ) {
 	if ( event.getSource() == this.upButton ) {
 	    try {
+		// Move this to thread
 		int parentLocation = YahooLocationLoader.fetchParentLocation( this.WOEID );
 		if ( parentLocation != 0 ) {
 		    this.upButton.setEnabled( true );
-		    this.showLocation( parentLocation );
+		    this.showLocation( parentLocation, true );
 		} else {
 		    this.upButton.setEnabled( false );
 		}
@@ -131,7 +214,7 @@ public class LocationSelectorPanel extends JPanel implements ActionListener {
 			getValue() );
 		if ( locationInfo.getValue().equals( selectedItem ) ) {
 		    try {
-			this.showLocation( locationInfo.getKey() );
+			this.showLocation( locationInfo.getKey(), true );
 		    } catch ( Exception ex ) {
 			System.out.println( "Show location error" );
 			Logger.getLogger( LocationSelectorPanel.class.getName() ).log( Level.SEVERE, null, ex );
@@ -142,15 +225,13 @@ public class LocationSelectorPanel extends JPanel implements ActionListener {
 	}
     }
     
-    private void showLocation( int WOEID ) throws Exception {
+    public void showLocation( int WOEID, boolean propagateToForecastWindow )
+	    throws Exception {
 	this.populateByWOEID( WOEID );
 	
-	if ( this.parentWindow == null ) {
-	    this.parentWindow = ( ForecastWindow ) SwingUtilities.
-		    getWindowAncestor( this );
+	if ( propagateToForecastWindow ) {
+	    this.parentWindow.showLocation( WOEID, false );
 	}
-	
-	this.parentWindow.showLocation( WOEID );
     }
     
     private JButton prepareIconButton( String name ) {
